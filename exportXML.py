@@ -3,6 +3,12 @@ import shutil
 from importAttMail import importMail
 from lxml import etree
 
+#Création des dossiers
+os.mkdir("./xml/")
+os.mkdir("./temp/")
+os.mkdir("./export/")
+os.mkdir("./check/")
+
 importMail()
 
 for fichiers in os.listdir('./xml/'):
@@ -53,3 +59,6 @@ for fichiers in os.listdir('./xml/'):
     os.remove("./temp/temp.xml")
 
 
+#Suppression des dossiers
+os.remove("./xml/")
+os.remove("./temp/")
