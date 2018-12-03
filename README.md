@@ -5,5 +5,4 @@ d'extraire les données souhaitées et de les insérer dans une base de donnée 
 
 Table MySQL :
 
-ID      | username     | color       | date
-int(10) | varchar(225) | varchar(50) | varchar(25)
+ID | username | color | date
