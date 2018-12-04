@@ -15,7 +15,6 @@ connection = pymysql.connect(host="", user="", passwd="", database="")
 importMail()
 
 for fichiers in os.listdir('./xml/'):
-    print(fichiers)
     
     #Declaration des fichiers qui vont être ouvert
     fichier = open("./xml/" + fichiers,  "r")

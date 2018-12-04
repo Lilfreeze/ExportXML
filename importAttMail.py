@@ -4,7 +4,6 @@ import os
 def importMail() :
     outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
     root_folder = outlook.Folders.Item(4)
-    print(root_folder)
     historique = root_folder.Folders['Historique XML']
     fait = root_folder.Folders['Fait']
     messages = historique.Items
