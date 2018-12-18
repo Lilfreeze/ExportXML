@@ -2,8 +2,8 @@ import os
 import shutil
 from importAttMail import importMail
 from lxml import etree
-import pymysql.cursors
 from datetime import datetime
+import pymysql.cursors
 import sys
 
 #Création des dossiers
@@ -21,12 +21,12 @@ try:
     connection = pymysql.connect(host="", user="", passwd="", database="")
 except:
     print("La connexion a MySQL a échoué")
-    fichierLog.write("La connexion a MySQL a échoue")
+    fichierLog.write("La connexion a MySQL a échoue\n")
     fichierLog.close()
     sys.exit()
 else:
     print("Connexion MySQL effectué")
-    fichierLog.write("Connexion MySQL effectué")
+    fichierLog.write("Connexion MySQL effectué\n")
     
 importMail()
 
@@ -49,7 +49,7 @@ for fichiers in os.listdir('./xml/'):
     #Fermeture de fichier2
     fichier2.close()
     #Deplacement des fichier dans "./xml/" vers "./check/" un par un
-    shutil.move('./xml/' + fichiers, './check/')
+    shutil.move('./xml/' + fichiers, './check/' + str(now.year) + str(now.month) + str(now.day) + "_" + fichiers)
 
 
     #Parse du fichier temp.xml
@@ -59,10 +59,12 @@ for fichiers in os.listdir('./xml/'):
     for noeud in tree.xpath('//export_job_logResponse/export_job_log'):
         for info in noeud.iter('print_job_log'):
             cur = connection.cursor()
-            donnees = (info.xpath("common/job_number")[0].text, info.xpath("common/user_name")[0].text, info.xpath("detail/print_color_mode")[0].text, info.xpath("common/start_time/year")[0].text, info.xpath("common/start_time/yday")[0].text)
-
-            cur.execute("""INSERT INTO export VALUES (%s,%s,%s,%s,%s)""", donnees)
-            
+            donnees = (info.xpath("common/job_number")[0].text, info.xpath("common/user_name")[0].text, info.xpath("detail/print_color_mode")[0].text, info.xpath("common/start_time/year")[0].text, info.xpath("common/start_time/yday")[0].text, info.xpath("detail/complete_copies")[0].text, info.xpath("detail/complete_pages")[0].text)
+            try:
+                cur.execute("""INSERT INTO export VALUES (%s,%s,%s,%s,%s,%s,%s)""", donnees)
+            except pymysql.err.IntegrityError :
+                print("L'ID existe deja dans la table")
+                fichierLog.write("L'ID" + info.xpath("common/job_number")[0].text + " existe deja dans la table MySQL. Cet ID de trouve dans le fichier : \"" + fichiers + "\"\n")
             
     #Suppression du fichier "./temp/temp.xml"
     os.remove("./temp/temp.xml")
