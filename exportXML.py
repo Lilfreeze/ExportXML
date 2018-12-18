@@ -3,15 +3,31 @@ import shutil
 from importAttMail import importMail
 from lxml import etree
 import pymysql.cursors
+from datetime import datetime
+import sys
 
 #Création des dossiers
 os.makedirs("./xml/", exist_ok=True)
 os.makedirs("./temp/", exist_ok=True)
 os.makedirs("./check/", exist_ok=True)
+os.makedirs("./log/", exist_ok=True)
+
+#Ouverture du fichier de log
+now = datetime.now()
+fichierLog = open("./log/log" + str(now.year) + str(now.month) + str(now.day) + ".txt", "a", encoding = 'utf8')
 
 #Ouverture connexion MySQL : Ajouter le nom d' hôte ou IP, le user, le mot de passe et la base de donnees
-connection = pymysql.connect(host="", user="", passwd="", database="")
-
+try:
+    connection = pymysql.connect(host="", user="", passwd="", database="")
+except:
+    print("La connexion a MySQL a échoué")
+    fichierLog.write("La connexion a MySQL a échoue")
+    fichierLog.close()
+    sys.exit()
+else:
+    print("Connexion MySQL effectué")
+    fichierLog.write("Connexion MySQL effectué")
+    
 importMail()
 
 for fichiers in os.listdir('./xml/'):
@@ -60,6 +76,10 @@ try:
     os.rmdir("./temp/")
 except PermissionError :
     print("Impossible de supprimé le dossier : Accès refusé")
+    fichierLog.write("Impossible de supprimé le dossier : Accès refusé")
 
 #Fermeture connexion MySQL
 connection.close()
+
+#Fermeture du fichier de log
+fichierLog.close()
