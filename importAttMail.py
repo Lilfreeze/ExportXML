@@ -2,8 +2,14 @@ import win32com.client
 import os
 
 def importMail() :
+    i = 1
     outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-    root_folder = outlook.Folders.Item(1)
+    root_folder = outlook.Folders.Item(i)
+    
+    while str(root_folder)!= "Imprimante" :
+        i = i + 1
+        root_folder = outlook.Folders.Item(i)
+
     historique = root_folder.Folders['Historique XML']
     fait = root_folder.Folders['Fait']
     messages = historique.Items
@@ -25,5 +31,4 @@ def importMail() :
         
         except:
             quit
-
 
