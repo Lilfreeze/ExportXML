@@ -5,4 +5,4 @@ d'extraire les données souhaitées et de les insérer dans une base de donnée 
 
 Table MySQL :
 
-ID | username | color | annee | jour
+ID | username | color | annee | jour | nbCopy | nbPage
