@@ -1,12 +1,17 @@
 import win32com.client
 import os
+import configparser
+
+#Lecture du fichier de config
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 def importMail() :
     i = 1
     outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
     root_folder = outlook.Folders.Item(i)
     
-    while str(root_folder)!= "Imprimante" :
+    while str(root_folder)!= config['OUTLOOK_CONFIG']['folder'] :
         i = i + 1
         root_folder = outlook.Folders.Item(i)
 

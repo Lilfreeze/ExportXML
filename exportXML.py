@@ -1,10 +1,15 @@
 import os
 import shutil
+import pymysql.cursors
+import sys
+import configparser
 from importAttMail import importMail
 from lxml import etree
 from datetime import datetime
-import pymysql.cursors
-import sys
+
+#Lecture du fichier de config
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 #Création des dossiers
 os.makedirs("./xml/", exist_ok=True)
@@ -18,7 +23,10 @@ fichierLog = open("./log/log" + str(now.year) + str(now.month) + str(now.day) + 
 
 #Ouverture connexion MySQL : Ajouter le nom d' hôte ou IP, le user, le mot de passe et la base de donnees
 try:
-    connection = pymysql.connect(host="", user="", passwd="", database="")
+    connection = pymysql.connect(host=config['DATABASE_CONFIG']['host'],
+                                 user=config['DATABASE_CONFIG']['user'],
+                                 passwd=config['DATABASE_CONFIG']['passwd'],
+                                 database=config['DATABASE_CONFIG']['database'])
 except:
     print("La connexion a MySQL a échoué")
     fichierLog.write("La connexion a MySQL a échoue\n")
