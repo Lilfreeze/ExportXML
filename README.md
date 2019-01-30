@@ -14,10 +14,15 @@ ID | username | color | annee | jour | nbCopy | nbPage
 Dans le fichier de fichier de config il faut remplir avec les infos suivantes :
 
 [DATABASE_CONFIG]
+
 host : Nom d'hôte ou adresse IP du serveur MySQL
+
 user : Nom d'utilisateur de la base de données
+
 passwd : Mot de passe de l'utilisateur
+
 database : Nom de la base de données
 
 [OUTLOOK_CONFIG]
+
 folder : fichier dans lequel se trouve les mails
