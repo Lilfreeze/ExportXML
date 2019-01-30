@@ -76,6 +76,8 @@ for fichiers in os.listdir('./xml/'):
             
     #Suppression du fichier "./temp/temp.xml"
     os.remove("./temp/temp.xml")
+    #Log le fichier finit
+    fichierLog.write(fichier + " : OK")
 
 connection.commit()
 cur.close()

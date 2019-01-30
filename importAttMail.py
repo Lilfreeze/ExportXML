@@ -33,7 +33,7 @@ def importMail() :
             attachment.SaveASFile(os.getcwd() + '\\xml\\' + str(j) + str(attachment))
             messages(j).move(fait)
             j = j - 1
+            print("Mail restant " + str(j))
         
         except:
             quit
-
