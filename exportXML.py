@@ -77,10 +77,11 @@ for fichiers in os.listdir('./xml/'):
     #Suppression du fichier "./temp/temp.xml"
     os.remove("./temp/temp.xml")
     #Log le fichier finit
-    fichierLog.write(fichier + " : OK")
+    fichierLog.write(fichiers + " : OK\n")
 
 connection.commit()
 cur.close()
+fichierLog.write("Transaction effectué vers MySQL\n")
 
 #Suppression des dossiers
 try:
@@ -88,7 +89,7 @@ try:
     os.rmdir("./temp/")
 except PermissionError :
     print("Impossible de supprimé le dossier : Accès refusé")
-    fichierLog.write("Impossible de supprimé le dossier : Accès refusé")
+    fichierLog.write("Impossible de supprimé le dossier : Accès refusé\n")
 
 #Fermeture connexion MySQL
 connection.close()
